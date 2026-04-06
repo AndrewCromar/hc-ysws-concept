@@ -2,8 +2,8 @@
 
 const int LED_PIN = 27;
 
-const int BTN_LEFT_N = 18;
-const int BTN_LEFT_E = 17;
+const int BTN_LEFT_N = 17;
+const int BTN_LEFT_E = 18;
 const int BTN_LEFT_S = 26;
 const int BTN_LEFT_W = 16;
 
@@ -18,20 +18,23 @@ const int BUTTONS[] = {
 };
 const int NUM_BUTTONS = sizeof(BUTTONS) / sizeof(BUTTONS[0]);
 
+const char* BUTTON_NAMES[] = {
+  "LEFT_N", "LEFT_E", "LEFT_S", "LEFT_W",
+  "RIGHT_N", "RIGHT_E", "RIGHT_S", "RIGHT_W"
+};
+
 void setup() {
-  pinMode(LED_PIN, OUTPUT);
+  Serial.begin(115200);
   for (int i = 0; i < NUM_BUTTONS; i++) {
     pinMode(BUTTONS[i], INPUT_PULLUP);
   }
 }
 
 void loop() {
-  bool anyPressed = false;
   for (int i = 0; i < NUM_BUTTONS; i++) {
     if (digitalRead(BUTTONS[i]) == LOW) {
-      anyPressed = true;
-      break;
+      Serial.println(BUTTON_NAMES[i]);
     }
   }
-  digitalWrite(LED_PIN, anyPressed ? HIGH : LOW);
+  delay(100);
 }
