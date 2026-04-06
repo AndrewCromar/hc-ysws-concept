@@ -4,6 +4,15 @@
 #include <Adafruit_TinyUSB.h>
 #include "buttons.h"
 
+struct GamepadReport {
+  uint16_t buttons;
+  uint8_t hat;
+  int8_t lx;
+  int8_t ly;
+  int8_t rx;
+  int8_t ry;
+} __attribute__((packed));
+
 class Gamepad {
 public:
   void begin();
@@ -11,5 +20,6 @@ public:
 
 private:
   Adafruit_USBD_HID _hid;
-  hid_gamepad_report_t _report;
+  GamepadReport _report;
+  uint8_t hatFromDpad(bool n, bool s, bool e, bool w);
 };
