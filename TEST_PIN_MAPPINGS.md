@@ -3,11 +3,11 @@
 > Joysticks are not wired yet and we will add them at a later date.
 > Buttons not connected yet and we will add them at a later date.
 
-LED               : GP26
+LED               : GP27
 
 LEFT_D_PAD_NORTH  : GP18
 LEFT_D_PAD_EAST   : GP17
-LEFT_D_PAD_SOUTH  : 
+LEFT_D_PAD_SOUTH  : GP26
 LEFT_D_PAD_WEST   : GP16
 
 RIGHT_D_PAD_NORTH : GP20
