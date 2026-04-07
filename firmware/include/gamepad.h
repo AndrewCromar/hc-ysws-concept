@@ -3,6 +3,7 @@
 #include <Arduino.h>
 #include <Adafruit_TinyUSB.h>
 #include "buttons.h"
+#include "joystick.h"
 
 struct GamepadReport {
   uint16_t buttons;
@@ -16,7 +17,7 @@ struct GamepadReport {
 class Gamepad {
 public:
   void begin();
-  void sendReport(Buttons& buttons);
+  void sendReport(Buttons& buttons, Joystick& leftStick);
 
 private:
   Adafruit_USBD_HID _hid;

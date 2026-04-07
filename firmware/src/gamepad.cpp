@@ -1,17 +1,16 @@
 #include "gamepad.h"
 
-// Custom HID report descriptor
 static uint8_t const desc_hid_report[] = {
   0x05, 0x01,        // Usage Page (Generic Desktop)
   0x09, 0x05,        // Usage (Game Pad)
   0xA1, 0x01,        // Collection (Application)
 
-  // 10 buttons with specific usages for correct Linux mapping
+  // Buttons
   0x05, 0x09,        //   Usage Page (Button)
-  0x09, 0x01,        //   Usage (Button 1)  - A / South
-  0x09, 0x02,        //   Usage (Button 2)  - B / East
-  0x09, 0x05,        //   Usage (Button 5)  - X / West
-  0x09, 0x04,        //   Usage (Button 4)  - Y / North
+  0x09, 0x01,        //   Usage (Button 1)  - A
+  0x09, 0x02,        //   Usage (Button 2)  - B
+  0x09, 0x05,        //   Usage (Button 5)  - X
+  0x09, 0x04,        //   Usage (Button 4)  - Y
   0x09, 0x07,        //   Usage (Button 7)  - LB
   0x09, 0x08,        //   Usage (Button 8)  - RB
   0x09, 0x09,        //   Usage (Button 9)  - LT
@@ -24,12 +23,12 @@ static uint8_t const desc_hid_report[] = {
   0x95, 0x0A,        //   Report Count (10)
   0x81, 0x02,        //   Input (Data, Var, Abs)
 
-  // 6 padding bits to complete 2 bytes
+  // Padding
   0x75, 0x01,        //   Report Size (1)
   0x95, 0x06,        //   Report Count (6)
   0x81, 0x03,        //   Input (Const, Var, Abs)
 
-  // Hat switch (d-pad) - full 8 bits
+  // Hat switch (d-pad)
   0x05, 0x01,        //   Usage Page (Generic Desktop)
   0x09, 0x39,        //   Usage (Hat Switch)
   0x15, 0x01,        //   Logical Minimum (1)
@@ -41,7 +40,7 @@ static uint8_t const desc_hid_report[] = {
   0x95, 0x01,        //   Report Count (1)
   0x81, 0x42,        //   Input (Data, Var, Abs, Null State)
 
-  // 4 axes: LX, LY, RX, RY (-127 to 127)
+  // Axes: LX, LY, RX, RY
   0x05, 0x01,        //   Usage Page (Generic Desktop)
   0x09, 0x30,        //   Usage (X)
   0x09, 0x31,        //   Usage (Y)
@@ -80,20 +79,20 @@ void Gamepad::begin() {
   memset(&_report, 0, sizeof(_report));
 }
 
-void Gamepad::sendReport(Buttons& buttons) {
+void Gamepad::sendReport(Buttons& buttons, Joystick& leftStick) {
   if (!_hid.ready()) return;
 
   _report.buttons = 0;
-  if (buttons.rightS) _report.buttons |= (1 << 0);  // A (south)
-  if (buttons.rightE) _report.buttons |= (1 << 1);  // B (east)
-  if (buttons.rightW) _report.buttons |= (1 << 2);  // X (west)
-  if (buttons.rightN) _report.buttons |= (1 << 3);  // Y (north)
+  if (buttons.rightS) _report.buttons |= (1 << 0);
+  if (buttons.rightE) _report.buttons |= (1 << 1);
+  if (buttons.rightW) _report.buttons |= (1 << 2);
+  if (buttons.rightN) _report.buttons |= (1 << 3);
 
   _report.hat = hatFromDpad(buttons.leftN, buttons.leftS,
                             buttons.leftE, buttons.leftW);
 
-  _report.lx = 0;
-  _report.ly = 0;
+  _report.lx = leftStick.x;
+  _report.ly = leftStick.y;
   _report.rx = 0;
   _report.ry = 0;
 
