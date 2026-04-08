@@ -2,4 +2,4 @@
 
 This is my You Ship We Ship concept for the Hack Club Gap Year Fellowship.
 
-Demo website [andrewcromar.github.io/hc-ysws-concept](https://andrewcromar.github.io/hc-ysws-concept/).
+Demo website [ysws.andrewcromar.org](https://ysws.andrewcromar.org/).
