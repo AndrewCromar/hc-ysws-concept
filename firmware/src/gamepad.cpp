@@ -91,10 +91,10 @@ void Gamepad::sendReport(Buttons& buttons, Joystick& leftStick) {
   _report.hat = hatFromDpad(buttons.leftN, buttons.leftS,
                             buttons.leftE, buttons.leftW);
 
-  _report.lx = leftStick.x;
-  _report.ly = leftStick.y;
-  _report.rx = 0;
-  _report.ry = 0;
+  _report.rx = -leftStick.x;
+  _report.ry = -leftStick.y;
+  _report.lx = 0;
+  _report.ly = 0;
 
   _hid.sendReport(0, &_report, sizeof(_report));
 }

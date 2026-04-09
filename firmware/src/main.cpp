@@ -5,22 +5,22 @@
 #include "gamepad.h"
 
 Buttons buttons;
-Joystick leftStick;
+Joystick rightStick;
 DebugLogger logger;
 Gamepad gamepad;
 
 void setup() {
   logger.begin();
   buttons.begin();
-  leftStick.begin(PIN_JOY_LX, PIN_JOY_LY);
-  leftStick.calibrate();
+  rightStick.begin(PIN_JOY_LX, PIN_JOY_LY);
+  rightStick.calibrate();
   gamepad.begin();
 }
 
 void loop() {
   buttons.update();
-  leftStick.update();
-  gamepad.sendReport(buttons, leftStick);
+  rightStick.update();
+  gamepad.sendReport(buttons, rightStick);
   logger.logButtons(buttons);
   delay(10);
 }
